@@ -8,6 +8,8 @@ export default function Component() {
     setSharedArray(newArray);
   };
 
+   
+
   // sendEmailHandle function to send the email to backend
   const sendEmailHandler = (subject, message, resume) => {
     const formatedMessage = message
@@ -19,7 +21,7 @@ export default function Component() {
     formData.append("subject", subject);
     formData.append("resume", resume);
     
-    fetch("http://localhost:5000/sendEmail", {
+    fetch("https://email-pro-backend.onrender.com/sendEmail", {
       method: "POST",
       body: formData,
     })

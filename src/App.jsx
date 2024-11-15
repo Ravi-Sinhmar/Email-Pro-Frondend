@@ -1,10 +1,12 @@
 
 import SendEmail from "@/pages/SendEmail";
+import EmailOAuth from "@/pages/emailOAuth";
 
 function App() {
   return (
     <>
-    <SendEmail ></SendEmail>
+    <EmailOAuth></EmailOAuth>
+    <SendEmail></SendEmail>
     </>
   );
 }
