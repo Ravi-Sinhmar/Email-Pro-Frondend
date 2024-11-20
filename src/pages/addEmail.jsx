@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
 import { Trash2, ChevronLeft, ChevronRight } from "lucide-react"
+import { Avatar } from '@radix-ui/react-avatar'
 
 export default function Component({ sharedArray, updateArray }) {
   const [inputEmails, setInputEmails] = useState('')
@@ -59,21 +60,20 @@ export default function Component({ sharedArray, updateArray }) {
   }
 
   return (
-    <div className="p-4 space-y-4 md:col-span-1 flex flex-col h-svh">
-    <div className="flex items-center justify-center bg-zinc-800 text-white rounded-md text-xs aspect-square h-8">
-      <span>{sharedArray.length}</span>
-    </div>
+    <>
+    <div className=" space-y-4 md:col-span-1 flex flex-col h-svh relative">
+
     <Textarea
       placeholder="Paste your bulk emails here..."
       value={inputEmails}
       onChange={(e) => setInputEmails(e.target.value)}
       className="min-h-[200px] bg-transparent text-white border-zinc-800"
     />
-    <Button onClick={processEmails} className="w-full bg-zinc-100 text-black hover:bg-white">Process Emails</Button>
+    <Button onClick={processEmails} className=" bg-white text-black hover:bg-white">Process Emails</Button>
     <div className="relative flex-1 overflow-hidden">
       <div 
         ref={scrollContainerRef}
-        className="flex flex-col overflow-y-scroll h-full space-y-2 p-2 border rounded-md scrollbar-hide w-full"
+        className="flex flex-col overflow-y-scroll h-full space-y-2 p-2 border bg-white border-zinc-700 rounded-md scrollbar-hide w-full"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {processedEmails.map((email, index) => (
@@ -82,7 +82,7 @@ export default function Component({ sharedArray, updateArray }) {
               type="email"
               value={email}
               onChange={(e) => updateEmail(index, e.target.value)}
-              className="w-full h-full flex p-3 outline-none border-none"
+              className="w-full h-full flex p-3 outline-none bg-zinc-900 text-white border-none"
             />
             <Button
               variant="ghost"
@@ -98,6 +98,7 @@ export default function Component({ sharedArray, updateArray }) {
       </div>
     </div>
   </div>
+  </>
   
   )
 }

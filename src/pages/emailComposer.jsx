@@ -14,8 +14,8 @@ import { Paperclip, Image as ImageIcon, Table } from "lucide-react";
 
 export default function Component({ sharedArray, sendEmailHandler }) {
   const scrollContainerRef = useRef(null);
-  const [subject, setSubject] = useState("Subject");
-  const [message, setMessage] = useState("Message");
+  const [subject, setSubject] = useState();
+  const [message, setMessage] = useState();
   const [resume, setResume] = useState(null);
 
   useEffect(() => {
@@ -24,19 +24,14 @@ export default function Component({ sharedArray, sendEmailHandler }) {
         scrollContainerRef.current.scrollWidth;
     }
   }, [sharedArray]);
-  
-// sendEamil button onClick
+
+  // sendEamil button onClick
   const sendEmail = () => {
-    sendEmailHandler(subject,message,resume);
+    sendEmailHandler(subject, message, resume);
   };
 
   return (
-    <Card className="md:col-span-2  bg-zinc-950 text-white  border-zinc-800 rounded-none">
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-        <div className="flex items-center space-x-2">
-          <span className="text-lg ">Compose Email</span>
-        </div>
-      </CardHeader>
+    <Card className="md:col-span-2  bg-zinc-950 text-white  border-zinc-800 rounded-md pt-4 ">
       <CardContent className="space-y-4">
         <div className="space-y-2">
           <div className="flex items-center space-x-2">
@@ -44,10 +39,6 @@ export default function Component({ sharedArray, sendEmailHandler }) {
               From
             </Label>
             <div className="flex items-center space-x-2 flex-1">
-              <Avatar className="h-6 w-6">
-                <AvatarImage src="/placeholder.svg" alt="Sender avatar" />
-                <AvatarFallback className="text-black">JH</AvatarFallback>
-              </Avatar>
               <Input
                 id="from"
                 defaultValue="sender@gmail.com"
@@ -61,10 +52,6 @@ export default function Component({ sharedArray, sendEmailHandler }) {
             <Label htmlFor="to" className="min-w-[3rem]">
               To
             </Label>
-            <Avatar className="h-6 w-6">
-              <AvatarImage src="/placeholder.svg" alt="Recipient avatar" />
-              <AvatarFallback className="text-black">MJ</AvatarFallback>
-            </Avatar>
 
             <div
               ref={scrollContainerRef}
@@ -94,56 +81,23 @@ export default function Component({ sharedArray, sendEmailHandler }) {
           placeholder="Write your message here..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          style={{ whiteSpace: 'pre-wrap' }}
-          className="min-h-[200px] bg-transparent border-zinc-800 resize-none focus-visible:ring-0 px-2"
+          style={{ whiteSpace: "pre-wrap" }}
+          className="min-h-[320px] bg-transparent border-zinc-800 resize-none focus-visible:ring-0 px-2"
         />
-
-        <input type="file" onChange={(e) => setResume(e.target.files[0])}
-         accept=".pdf,.doc,.docx"
-         />  
-
-        <div className="flex items-center space-x-4 pt-4 border-t border-zinc-800">
-          <Avatar className="h-8 w-8">
-            <AvatarImage src="/placeholder.svg" alt="Sender profile" />
-            <AvatarFallback className="text-black">JH</AvatarFallback>
-          </Avatar>
-          <div className="space-y-1">
-            <p className="text-sm">Julian Herbst</p>
-            <p className="text-xs text-zinc-400">Design Consultant</p>
-          </div>
+        <div className="flex justify-between">
+          <input
+            type="file"
+            onChange={(e) => setResume(e.target.files[0])}
+            accept=".pdf,.doc,.docx"
+          />
+          <Button
+            onClick={sendEmail}
+            className="bg-white text-zinc-800 hover:bg-white"
+          >
+            Send Email
+          </Button>
         </div>
       </CardContent>
-      <CardFooter className="justify-between border-t border-zinc-800 py-4">
-        <div className="flex space-x-2">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-zinc-400 hover:text-black"
-          >
-            <Paperclip className="h-4 w-4" />
-            <span className="sr-only">Attach file</span>
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-zinc-400 hover:text-black"
-          >
-            <ImageIcon className="h-4 w-4" />
-            <span className="sr-only">Attach image</span>
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-zinc-400 hover:text-black"
-          >
-            <Table className="h-4 w-4" />
-            <span className="sr-only">Insert table</span>
-          </Button>
-        </div>
-        <Button onClick={sendEmail} className="bg-blue-600 hover:bg-blue-700">
-          Send Email
-        </Button>
-      </CardFooter>
     </Card>
   );
 }

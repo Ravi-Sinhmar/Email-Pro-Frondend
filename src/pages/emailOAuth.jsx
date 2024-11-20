@@ -1,27 +1,29 @@
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Mail, FileText, Zap } from "lucide-react"
+import { useState,useEffect } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Mail, FileText, Zap } from "lucide-react";
+import { useAuth } from '@/contexts/auth';
+
 
 export default function Component() {
-  const [isAuthenticating, setIsAuthenticating] = useState(false)
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const { login, isAuth } = useAuth();
+  const navigate = useNavigate(); // Initialize navigate
 
-  const handleAuth = async () => {
-    setIsAuthenticating(true)
-    try {
-      const response = await fetch('https://email-pro-backend.onrender.com/authenticate', { method: 'POST', credentials: "include" })
-      if (response.ok) {
-        // Handle successful authentication
-        console.log('Authentication successful')
-      } else {
-        throw new Error('Authentication failed')
-      }
-    } catch (error) {
-      console.error('Error during authentication:', error)
-    } finally {
-      setIsAuthenticating(false)
+ useEffect(() => {
+    if (isAuth) {
+      setIsAuthenticating(false);
+      navigate("/send-email")
     }
+  }, [isAuth, navigate]);
+
+  const handleAuth =  () => {
+    setIsAuthenticating(true);
+    login();
   }
+  
   return (
     <div className="min-h-screen bg-zinc-900 text-white flex flex-col items-center justify-center p-4">
       <h1 className="text-4xl font-bold mb-6">Email Automation Platform</h1>
